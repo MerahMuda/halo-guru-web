@@ -1,0 +1,40 @@
+{
+  "name": "halo-guru-web",
+  "version": "1.0.0",
+  "description": "halo-guru-web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MerahMuda/halo-guru-web.git"
+  },
+  "author": "dimasawardhana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MerahMuda/halo-guru-web/issues"
+  },
+  "homepage": "https://github.com/MerahMuda/halo-guru-web#readme",
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.3",
+    "@mui/material": "^5.14.5",
+    "@mui/x-data-grid": "^6.12.0",
+    "@types/node": "^20.4.10",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "eslint": "^8.47.0",
+    "eslint-config-next": "^13.4.13",
+    "next": "^13.4.13",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.1.6",
+    "zustand": "^4.4.1"
+  }
+}
