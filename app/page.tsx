@@ -1,22 +1,31 @@
 'use client'
 
-import { Container, Grid } from '@mui/material';
-import WithAuth from 'libs/WithAuth';
+import { Grid } from '@mui/material';
+import useStore from 'hooks/useStore';
 import Head from 'next/head'
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 
 const Homepage = () => {
+
+    const {
+        accessToken
+    } = useStore()
+    const router = useRouter()
+    useEffect(() => {
+        if (accessToken) router.push("/gtk")
+        router.push("/login")
+    }, [accessToken])
     return (
-        <WithAuth>
+        <>
             <Head>
                 <title> Homepage </title>
             </Head>
             <Grid >
                 Redirecting
             </Grid>
-        </WithAuth>
+        </>
     )
 }
 
