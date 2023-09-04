@@ -8,13 +8,6 @@ import { useEffect, useState } from 'react';
 
 
 const Homepage = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const router = useRouter();
-    useEffect(() => {
-        if (isLoggedIn) router.push("/gtk")
-        router.push("/login")
-    }, [isLoggedIn]);
-
     return (
         <WithAuth>
             <Head>
