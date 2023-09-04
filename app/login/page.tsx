@@ -45,7 +45,7 @@ const LoginPage: FC = () => {
                     <TextField fullWidth variant="outlined" name="email" />
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField fullWidth variant="outlined" name="password" />
+                    <TextField fullWidth variant="outlined" name="password" type="password" />
                 </Grid>
                 <Grid container item xs={12} justifyContent={"center"}>
                     <Grid item xs={6}>
