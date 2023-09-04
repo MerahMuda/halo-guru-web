@@ -24,29 +24,29 @@ let options = {
 const instance = axios.create(options)
 
 instance.interceptors.request.use(accessTokenInsertion, accessTokenError)
-instance.interceptors.response.use((res) => res, async (err) => {
-    const originalConfig = err?.config
+// instance.interceptors.response.use((res) => res, async (err) => {
+//     const originalConfig = err?.config
 
-    if (!originalConfig?.sent && err?.response?.status === 401) {
-        originalConfig.sent = true
+//     if (!originalConfig?.sent && err?.response?.status === 401) {
+//         originalConfig.sent = true
 
-        try {
-            const state = vanillaUseStore.getState() as any
-            const response = await RefreshToken({ token: state.refreshToken })
-            vanillaUseStore.setState({
-                token: response.token,
-                refreshToken: response.refreshToken
-            })
-            originalConfig['headers'] = {
-                Authorization: `Bearer ${response.token}`
-            }
+//         try {
+//             const state = vanillaUseStore.getState() as any
+//             const response = await RefreshToken({ token: state.refreshToken })
+//             vanillaUseStore.setState({
+//                 token : response.token,
+//                 refreshToken : response.refreshToken
+//             })
+//             originalConfig['headers'] = {
+//                 Authorization: `Bearer ${response.token}`
+//             }
 
-            return instance(originalConfig)
-        } catch (err) {
-            vanillaUseStore.setState({ accessToken: "", refreshToken: "" })
-            return Promise.reject(err);
-        }
-    }
-})
+//             return instance(originalConfig)
+//         } catch (err) {
+//             vanillaUseStore.setState({ accessToken: "", refreshToken: "" })
+//             return Promise.reject(err);
+//         }
+//     }
+// })
 
 export default instance

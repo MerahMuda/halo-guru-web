@@ -4,6 +4,7 @@ import { Avatar, Grid, Paper, Container as ContainerMUI, Box, Typography, Stack,
 import BreadcrumbsComponent from "components/Breadcrumbs"
 import ItemList, { ItemProps } from "components/NavigationList"
 import useStore from "hooks/useStore"
+import WithAuth from "libs/WithAuth"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
@@ -123,7 +124,9 @@ export default function AdminLayout({
         <Grid container height="100vh" width="100vw">
             <Sidebar />
             <Container>
-                {children}
+                <WithAuth>
+                    {children}
+                </WithAuth>
             </Container>
         </Grid>
     )

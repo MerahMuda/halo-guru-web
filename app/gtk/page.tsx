@@ -20,7 +20,7 @@ const GTK = () => {
     const router = useRouter()
     const redirectToCreate = () => router.push("/gtk/create")
     return (
-        <WithAuth>
+        <>
             <Box display="flex" justifyContent={"flex-end"} gap={2} >
                 <Button variant="contained" onClick={redirectToCreate}>
                     Import
@@ -41,7 +41,7 @@ const GTK = () => {
                     paginationMode="server"
                 />
             </Box>
-        </WithAuth>
+        </>
     )
 }
 
