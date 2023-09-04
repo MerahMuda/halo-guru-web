@@ -19,7 +19,6 @@ const GTK = () => {
 
     const router = useRouter()
     const redirectToCreate = () => router.push("/gtk/create")
-    console.log(grid)
     return (
         <WithAuth>
             <Box display="flex" justifyContent={"flex-end"} gap={2} >

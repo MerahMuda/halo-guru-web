@@ -5,7 +5,7 @@ import BreadcrumbsComponent from "components/Breadcrumbs"
 import ItemList, { ItemProps } from "components/NavigationList"
 import useStore from "hooks/useStore"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const navigationList: ItemProps[] = [
     {
@@ -40,6 +40,7 @@ const Container = ({ children }) => {
     const {
         profile, resetToken
     } = useStore();
+    const [name, setName] = useState('')
     const router = useRouter();
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -56,6 +57,10 @@ const Container = ({ children }) => {
         resetToken()
         router.push("/login")
     }
+
+    useEffect(() => {
+        setName(profile.nama)
+    }, [profile.nama])
 
     return (
         <Grid height="100%" width={"calc(100% - 180px)"} display={"flex"} flexDirection={"column"}>
@@ -79,8 +84,8 @@ const Container = ({ children }) => {
                         onClick={handleClick}
                     >
                         <Stack direction={"row"} spacing={2} justifyContent={"center"} alignItems={"center"}>
-                            <Avatar alt={profile.nama} />
-                            <Typography textTransform={"capitalize"}>{profile.nama}</Typography>
+                            <Avatar alt={name} />
+                            <Typography textTransform={"capitalize"} variant="h6">{name}</Typography>
                         </Stack>
                     </ButtonBase>
                     <Menu

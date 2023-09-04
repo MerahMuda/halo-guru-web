@@ -1,5 +1,6 @@
 import useStore from "hooks/useStore"
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const WithAuth = (props: any) => {
     const { children } = props;
@@ -7,7 +8,10 @@ const WithAuth = (props: any) => {
         accessToken
     } = useStore();
     const router = useRouter();
-    if (!accessToken) router.replace("/login");
+    useEffect(() => {
+        if (!accessToken) router.replace("/login");
+    }, [accessToken])
+
 
     return (
         <>
