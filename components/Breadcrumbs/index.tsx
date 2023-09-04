@@ -20,7 +20,6 @@ const BreadcrumbsComponent = () => {
                 key: `${pathnames[index]}-breadcrumb`
             });
         }
-        console.log(items)
         setBreadcrumbsItems(items)
     }, [pathname])
     return (

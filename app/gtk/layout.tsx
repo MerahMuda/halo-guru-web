@@ -1,7 +1,11 @@
+'use client'
 import { School } from "@mui/icons-material"
-import { Avatar, Grid, Paper, Container as ContainerMUI, Box } from "@mui/material"
+import { Avatar, Grid, Paper, Container as ContainerMUI, Box, Typography, Stack, ButtonBase, Menu, MenuItem } from "@mui/material"
 import BreadcrumbsComponent from "components/Breadcrumbs"
 import ItemList, { ItemProps } from "components/NavigationList"
+import useStore from "hooks/useStore"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 const navigationList: ItemProps[] = [
     {
@@ -33,6 +37,26 @@ const Sidebar = () => {
     )
 }
 const Container = ({ children }) => {
+    const {
+        profile, resetToken
+    } = useStore();
+    const router = useRouter();
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const logout = () => {
+        resetToken()
+        router.push("/login")
+    }
+
     return (
         <Grid height="100%" width={"calc(100% - 180px)"} display={"flex"} flexDirection={"column"}>
             <Grid
@@ -47,11 +71,32 @@ const Container = ({ children }) => {
                     <BreadcrumbsComponent />
                 </Box>
                 <Box>
-                    <Avatar src="" />
-
+                    <ButtonBase
+                        id="basic-button"
+                        aria-controls={open ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={handleClick}
+                    >
+                        <Stack direction={"row"} spacing={2} justifyContent={"center"} alignItems={"center"}>
+                            <Avatar alt={profile.nama} />
+                            <Typography textTransform={"capitalize"}>{profile.nama}</Typography>
+                        </Stack>
+                    </ButtonBase>
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        <MenuItem onClick={logout}>Logout</MenuItem>
+                    </Menu>
                 </Box>
             </Grid>
-            <Grid flex={1} >
+            <Grid height={"calc(100% - 70px)"} >
                 <ContainerMUI maxWidth="xl" sx={{ padding: 6, height: "100%", width: "100%" }}>
                     <Paper elevation={5} sx={{
                         padding: 2, height: "100%", display: "flex", flexDirection: "column", gap: "20px"

@@ -1,27 +1,30 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware"
+import { createStore } from "zustand/vanilla"
 
-const createStore = create(
-    persist(
-        (set) => ({
-            profile: {},
-            accessToken: '',
-            refreshToken: '',
-            setProfile: (profile: any) => set(() => ({ profile })),
-            setToken: (accessToken: any) => set(() => ({ accessToken })),
-            setRefreshToken: (refreshToken: any) => set(() => ({ refreshToken })),
-            resetToken: () => set(() => ({ accessToken: "", refreshToken: "" }))
-        }),
-        {
-            name: "HaloGuru-admin"
-        }
-    )
+const persistedStore = persist(
+    (set) => ({
+        profile: {},
+        accessToken: '',
+        refreshToken: '',
+        setProfile: (profile: any) => set(() => ({ profile })),
+        setToken: (accessToken: any) => set(() => ({ accessToken })),
+        setRefreshToken: (refreshToken: any) => set(() => ({ refreshToken })),
+        resetToken: () => set(() => ({ accessToken: "", refreshToken: "" }))
+    }),
+    {
+        name: "HaloGuru-admin"
+    }
 )
+const initStore = create(
+    persistedStore
+)
+export const vanillaUseStore = createStore(persistedStore)
 
 const useStore = () => {
     const {
         accessToken, refreshToken, setToken, setRefreshToken, resetToken, profile, setProfile
-    } = createStore((state: any) => ({
+    } = initStore((state: any) => ({
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
         setToken: state.setToken,

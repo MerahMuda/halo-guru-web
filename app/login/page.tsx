@@ -1,39 +1,65 @@
 'use client'
-import { Button, Grid, TextField, Typography } from "@mui/material"
+import { Button, CircularProgress, Grid, TextField, Typography } from "@mui/material"
+import useStore from "hooks/useStore"
 import { useRouter } from "next/navigation"
-import { FC } from "react"
+import { FC, FormEvent, useEffect, useState } from "react"
+import { AuthLogin } from "services/Auth"
 
 const LoginPage: FC = () => {
     const router = useRouter()
-    const login = async () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const {
+        accessToken, setToken, setRefreshToken, setProfile
+    } = useStore()
+    const login = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setIsLoading(true)
         try {
-            //hit api
+            const formData = new FormData(e.currentTarget);
+            const obj = {}
+            formData.forEach((value, key) => obj[key] = value);
+            const response = await AuthLogin(obj);
+            setToken(response.data.token)
+            setRefreshToken(response.data.refreshToken)
+            setProfile(response.data.user)
             router.push("/gtk")
         } catch (e) {
 
         }
+        finally {
+            setIsLoading(false)
+        }
     }
+
+    if (accessToken) router.push("/gtk")
+
     return (
-        <Grid container display={"flex"} rowGap={4} p={6} textAlign={"center"}>
-            <Grid item xs={12}>
-                <Typography variant="h3">&quot;JAYA GUPTA&quot;</Typography></Grid>
-            <Grid item xs={12}>
-                <Typography variant="subtitle1">Jaringan Pelayanan Guru Pada Kota Denpasar</Typography>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField fullWidth variant="outlined" />
-            </Grid>
-            <Grid item xs={12}>
-                <TextField fullWidth variant="outlined" />
-            </Grid>
-            <Grid container item xs={12} justifyContent={"center"}>
-                <Grid item xs={6}>
-                    <Button fullWidth variant="contained" sx={{ padding: 2 }} onClick={login}>
-                        Login
-                    </Button>
+        <form onSubmit={login}>
+            <Grid container display={"flex"} rowGap={4} p={6} textAlign={"center"}>
+                <Grid item xs={12}>
+                    <Typography variant="h3">&quot;JAYA GUPTA&quot;</Typography></Grid>
+                <Grid item xs={12}>
+                    <Typography variant="subtitle1">Jaringan Pelayanan Guru Pada Kota Denpasar</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField fullWidth variant="outlined" name="email" />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField fullWidth variant="outlined" name="password" />
+                </Grid>
+                <Grid container item xs={12} justifyContent={"center"}>
+                    <Grid item xs={6}>
+                        <Button fullWidth variant="contained" sx={{ padding: 2 }} type="submit">
+                            Login
+                        </Button>
+                        {
+                            isLoading && <CircularProgress />
+                        }
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </form>
+
     )
 }
 

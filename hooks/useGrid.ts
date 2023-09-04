@@ -34,7 +34,11 @@ const useGrid = <Type>(params: UseGridProps) => {
             // { page, pageSize }
             const response = await apiCall(paginationModel);
             setDataRows(response.data as Type[])
-            setMeta(response.meta as Meta)
+            setMeta({
+                page: paginationModel.page,
+                totalPage: response.total / paginationModel.pageSize,
+                totalRows: response.total
+            } as Meta)
         } catch (error) {
 
         } finally {

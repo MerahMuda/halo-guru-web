@@ -4,19 +4,20 @@ import { GridColDef } from '@mui/x-data-grid';
 type GTKDto = {
     id: string | number
     nip_nuptk: string
-    name: string
+    nama: string
     password: string
     status: string
-    last_online: string | Date
-    photo: string
+    terakhir_online: string | Date
+    foto: string
     unit_kerja: string
     riwayat_pendidikan: string
     biografi: string
     firebase_token: string
-    updated_at: string | Date
-    created_at: string | Date
+    updatedAt: string | Date
+    createdAt: string | Date
 
     role_id: string | number // FK
+    role_nama: string
 
     mata_pelajaran: string
     media_pembelajaran: string
