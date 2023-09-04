@@ -8,9 +8,21 @@ const persistedStore = persist(
         accessToken: '',
         refreshToken: '',
         setProfile: (profile: any) => set(() => ({ profile })),
-        setToken: (accessToken: any) => set(() => ({ accessToken })),
-        setRefreshToken: (refreshToken: any) => set(() => ({ refreshToken })),
-        resetToken: () => set(() => ({ accessToken: "", refreshToken: "" }))
+        setToken: (accessToken: any) => set(() => {
+            localStorage.setItem('token', accessToken)
+            return ({ accessToken })
+        }),
+        setRefreshToken: (refreshToken: any) => set(() => {
+            localStorage.setItem('refreshToken', refreshToken)
+
+            return ({ refreshToken })
+        }),
+        resetToken: () => set(() => {
+            localStorage.setItem('token', null);
+            localStorage.setItem('refreshToken', null);
+
+            return ({ accessToken: "", refreshToken: "" })
+        })
     }),
     {
         name: "HaloGuru-admin"

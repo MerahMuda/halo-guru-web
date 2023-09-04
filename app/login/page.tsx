@@ -22,6 +22,8 @@ const LoginPage: FC = () => {
             setToken(response.data.token)
             setRefreshToken(response.data.refreshToken)
             setProfile(response.data.user)
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('refreshToken', response.data.refreshToken)
             router.push("/gtk")
         } catch (e) {
 
