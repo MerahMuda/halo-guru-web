@@ -9,3 +9,12 @@ export const AuthLogin = async (data) => {
         return error
     }
 }
+export const RefreshToken = async (data) => {
+    try {
+        const response = await Http.post('/auth/refresh', data)
+
+        return response.data
+    } catch (error) {
+        return error
+    }
+}
