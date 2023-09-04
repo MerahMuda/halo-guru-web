@@ -16,7 +16,7 @@ const LoginPage: FC = () => {
     return (
         <Grid container display={"flex"} rowGap={4} p={6} textAlign={"center"}>
             <Grid item xs={12}>
-                <Typography variant="h3">"JAYA GUPTA"</Typography></Grid>
+                <Typography variant="h3">&quot;JAYA GUPTA&quot;</Typography></Grid>
             <Grid item xs={12}>
                 <Typography variant="subtitle1">Jaringan Pelayanan Guru Pada Kota Denpasar</Typography>
             </Grid>

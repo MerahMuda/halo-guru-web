@@ -28,7 +28,7 @@ const BreadcrumbsComponent = () => {
             {
                 breadcrumbItems.map((item) => (
                     item.pathname === pathname ?
-                        <Typography color="text.primary">{item.label}</Typography>
+                        <Typography key={item.key} color="text.primary">{item.label}</Typography>
                         : <Link key={item.key} underline={"hover"} color="inherit" href={item.pathname}>
                             {item.label}
                         </Link>
