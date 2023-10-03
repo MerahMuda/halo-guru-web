@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { GridFilterModel } from "@mui/x-data-grid"
+import { useCallback, useEffect, useState } from "react"
 
 interface UseGridProps {
     apiCall: any
@@ -26,13 +27,27 @@ const useGrid = <Type>(params: UseGridProps) => {
     const [paginationModel, setPaginationModel] = useState<PaginationModel>({
         page: 0, pageSize: defaultPageSize
     })
+    const [filterParams, setFilterParams] = useState({});
+    const [filterModel, setFilterModel] = useState<GridFilterModel>({ items: [] });
 
-    const fetchData = async () => {
+    const onFilterChange = useCallback((filterModel: GridFilterModel) => {
+        // Here you save the data you need from the filter model
+        // setQueryOptions({ filterModel: { ...filterModel } });
+        const filter = {};
+        filterModel?.items.forEach((params: any) => {
+            filter[params.field] = {}
+            filter[params.field]["eq"] = params.value
+        })
+        setFilterModel(filterModel);
+        setFilterParams({ filter });
+    }, []);
+
+    const fetchData = useCallback(async () => {
         try {
             setIsLoading(true);
             // fetchData containing page and pageSize of pagination Model
             // { page, pageSize }
-            const response = await apiCall(paginationModel);
+            const response = await apiCall({ ...paginationModel, ...filterParams });
             setDataRows(response.data as Type[])
             setMeta({
                 page: paginationModel.page,
@@ -44,7 +59,12 @@ const useGrid = <Type>(params: UseGridProps) => {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [paginationModel, filterParams])
+
+    const resetFilter = useCallback(() => {
+        setFilterParams({})
+        setFilterModel({ items: [] })
+    }, [])
 
     useEffect(() => {
         fetchData()
@@ -52,10 +72,14 @@ const useGrid = <Type>(params: UseGridProps) => {
 
     return {
         rows: dataRows,
+        fetchData,
         meta,
         isLoading,
         paginationModel,
-        setPaginationModel
+        filterModel,
+        setPaginationModel,
+        onFilterChange,
+        resetFilter,
     }
 }
 

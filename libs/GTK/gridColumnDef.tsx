@@ -1,6 +1,13 @@
-import { GridColDef } from "@mui/x-data-grid";
+import { Delete, Edit, Visibility } from "@mui/icons-material";
+import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 
-const GTKColDef: GridColDef[] = [
+const GTKColDef = (params: any): GridColDef[] => {
+  const {
+    onEditClick,
+    onDeleteClick,
+    onViewClick
+  } = params;
+  return [
     { field: 'id', headerName: 'Id', width: 90 },
     { field: 'nip_nuptk', headerName: 'NIP/NUPTK', width: 150 },
     { field: 'nama', headerName: 'Nama', width: 150 },
@@ -23,9 +30,39 @@ const GTKColDef: GridColDef[] = [
     { field: 'pangkat', headerName: 'Pangkat', width: 150 },
     { field: 'golongan', headerName: 'Golongan', width: 150 },
     { field: 'jabatan', headerName: 'Jabatan', width: 150 },
-    // { field: 'jabatan_id', headerName: 'Column 1', width: 90 },
-]
 
+    // { field: 'jabatan_id', headerName: 'Column 1', width: 90 },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      getActions: (data) => {
+        return [
+          <GridActionsCellItem
+            icon={<Visibility />}
+            label="View Detail"
+            className="textPrimary"
+            onClick={() => onViewClick(data?.id)}
+            color="inherit"
+          />,
+          <GridActionsCellItem
+            icon={<Edit />}
+            label="Edit"
+            className="textPrimary"
+            onClick={() => onEditClick(data?.id)}
+            color="inherit"
+          />,
+          <GridActionsCellItem
+            icon={<Delete />}
+            label="Delete"
+            onClick={() => onDeleteClick(data.row)}
+            color="inherit"
+          />,
+        ];
+      },
+    }]
+}
 export {
-    GTKColDef
+  GTKColDef,
 }

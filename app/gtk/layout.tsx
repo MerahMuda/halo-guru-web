@@ -103,7 +103,7 @@ const Container = ({ children }) => {
                 </Box>
             </Grid>
             <Grid height={"calc(100% - 70px)"} >
-                <ContainerMUI maxWidth="xl" sx={{ padding: 6, height: "100%", width: "100%" }}>
+                <ContainerMUI maxWidth="xl" sx={{ padding: 2, height: "100%", width: "100%" }}>
                     <Paper elevation={5} sx={{
                         padding: 2, height: "100%", display: "flex", flexDirection: "column", gap: "20px"
                     }}>
